@@ -1,3 +1,8 @@
+<!-- Author: Michael Mohler
+    Date: 1/23/21
+    Minor edits from the generated auth
+    Login Page that allows user to login with a registered account.  -->
+
 @extends('layouts.app')
 
 @section('content')
@@ -51,17 +56,21 @@
                             </div>
                         </div>
 
+
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
+                               <!-- Forgot my password put on it's own line -->
+                               	@if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
+                                <br/>
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('Login') }}
+                                </button>
+
+
                             </div>
                         </div>
                     </form>

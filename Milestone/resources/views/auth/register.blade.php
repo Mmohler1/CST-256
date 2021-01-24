@@ -1,3 +1,7 @@
+<!-- Author: Michael Mohler
+    Date: 1/23/21
+    Register page that will setup the user in the database to work on the login page  -->
+
 @extends('layouts.app')
 
 @section('content')
