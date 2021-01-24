@@ -1,5 +1,6 @@
 <?php
 
+//Controller genereated from the auth pages
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
