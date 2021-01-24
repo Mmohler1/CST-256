@@ -1,9 +1,15 @@
 <!DOCTYPE html>
+<!-- Author: Michael Mohler
+    Date: 1/23/21
+    Minor edits from the generated auth  
+    The main page under public-->
+
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+		<!-- Placeholder site name -->
         <title>GroundedStorks</title>
 
         <!-- Fonts -->
@@ -83,7 +89,7 @@
                 <div class="title m-b-md">
                     GroundedStorks
                 </div>
-
+		<!-- Changed to not link to laravel sites -->
                 <div class="links">
                     <a href="">Option1</a>
                     <a href="">Option2</a>
