@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use App\Services\Business\SecurityService;
+
 
 class LoginController extends Controller
 {
@@ -35,5 +38,32 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+    
+    
+    
+    
+    //Date 2/7/21
+    //Overrides the other authentication to check for suspensions.
+    protected function authenticated(Request $request, $user)
+    {
+        
+        $email = $request->input('email');
+        
+        
+        $securityser = new SecurityService();
+        
+        
+        if($securityser ->checkIfSuspended($email))
+        {
+           
+           
+            //Copy paste from AuthenticateUser logout, but with redirect to /login instead.
+            $this->guard()->logout();          
+            $request->session()->invalidate();
+            return $this->loggedOut($request) ?: redirect('/login');
+        }
+
+        
     }
 }
