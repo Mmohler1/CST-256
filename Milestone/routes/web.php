@@ -15,8 +15,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/account', 'HomeController@account')->name('account');
+
+Route::get('/admin', 'AdminController@index')->name('admin');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::post('/doSuspend','AdminController@trySuspend');
 
+Route::post('/doAdmin','AdminController@doAdmin');
+
+Route::post('/doPermSuspend','AdminController@doPermSuspend');
