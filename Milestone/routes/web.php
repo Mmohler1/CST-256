@@ -19,6 +19,8 @@ Route::get('/account', 'HomeController@account')->name('account');
 
 Route::get('/admin', 'AdminController@index')->name('admin');
 
+Route::get('/suspended', 'AdminController@suspended')->name('admin');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
