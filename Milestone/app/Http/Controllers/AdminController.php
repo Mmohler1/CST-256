@@ -29,6 +29,11 @@ class AdminController extends Controller
         return view('administration/admin');
     }
     
+    public function suspended()
+    {
+        return view('/suspended');
+    }
+    
     
     //Suspends user based on their name
     public function trySuspend(Request $request)

@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Services\Business\SecurityService;
+use App\User;
 
 
 class LoginController extends Controller
@@ -47,23 +49,21 @@ class LoginController extends Controller
     //Overrides the other authentication to check for suspensions.
     protected function authenticated(Request $request, $user)
     {
-        
         $email = $request->input('email');
         
         
         $securityser = new SecurityService();
         
         
-        if($securityser ->checkIfSuspended($email))
+        if($securityser ->checkWhatRole($email)=="suspended")
         {
-           
-           
+            
+            
             //Copy paste from AuthenticateUser logout, but with redirect to /login instead.
-            $this->guard()->logout();          
+            $this->guard()->logout();
             $request->session()->invalidate();
-            return $this->loggedOut($request) ?: redirect('/login');
+            return view('/suspended');
         }
-
         
     }
 }

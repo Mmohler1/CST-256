@@ -37,21 +37,14 @@ class SecurityService
     }
     
     //checks if user is suspended
-    public function checkIfSuspended(string $email)
+    public function checkWhatRole(string $email)
     {
         //Created to use DAO, then run function.
         $secDao = new SecurityDAO;
         
         
-        if($secDao->checkSuspend($email))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-        
+        return $secDao->checkRole($email);
+
     }
     
     
