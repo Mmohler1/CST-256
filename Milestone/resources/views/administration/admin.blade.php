@@ -3,9 +3,13 @@
 @section('content')
 
 
+<!-- If the user isn't an admin then it won't show the features-->
+@if(Auth::user()->getRoleAttribute(Auth::user()->email) == "admin")
 <div class="card">
+                                    
 	<div class="card-header">Manage Users</div>
 		<div class="card-body">
+		
     	<br/>
     	<h2>Suspend user by name</h2>
 		<form action = "doSuspend" method = "POST"> <!-- Suspeends user -->
@@ -43,5 +47,13 @@
 		</form>
 
 	</div>
+
+@else
+<div class="card">
+	<div class="card-header">Error</div>
+		<h2>You don't have access to this page!</h2>
+
+	</div>
 </div>
+@endif
 @endsection

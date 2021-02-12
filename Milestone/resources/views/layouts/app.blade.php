@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
+
+<!-- Style for easily overwritting the massive app.css file without doing major changes-->	
+<style> 
+	.footstuff {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 30px;
+
+}</style>
+	
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -18,6 +29,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    
 </head>
 <body>
     <div id="app">
@@ -69,6 +81,13 @@
                               		 <a class="dropdown-item" href="account"> <!-- New Dropdown 2/5/21 -->
                                         Account
                                     </a>
+                                    
+                                    <!-- If user is admin then show admin page -->
+                                    @if(Auth::user()->getRoleAttribute(Auth::user()->email) == "admin")
+                                   		<a class="dropdown-item" href="admin"> <!-- New Dropdown 2/5/21 -->
+                                        	Admin
+                                    	</a>
+                                    @endif
                                 </div> <!-- End of the dropdown -->
                                 
                             </li>
@@ -82,5 +101,14 @@
             @yield('content')
         </main>
     </div>
+    
+    <!--Footer-->
+    <div class="footstuff">
+	<footer>
+    		<small><i>Copyright 2021 GroundedStorks</i></small>	
+    			
+    </footer>
+    </div>
+    
 </body>
 </html>

@@ -17,13 +17,21 @@
                  	<div class="center">
                        <table>  <!-- Details of a users account. -->
                            	<tr>
+                           		<td><b>User ID:</b></td>
+                           		<td>{{Auth::user()->id}}</td>
+                           	</tr> 
+                           	<tr>
                            		<td><b>Name:</b></td>
                            		<td>{{Auth::user()->name}}</td>
                            	</tr>
                            	<tr>
                            		<td><b>Email:</b></td>
                            		<td>{{Auth::user()->email}}</td>
-                           	</tr>                   
+                           	</tr>
+                           	<tr>
+                           		<td><b>Role:</b></td>
+                           		<td>{{Auth::user()->getRoleAttribute(Auth::user()->email)}}</td>
+                           	</tr>               
                        
                        
                        
