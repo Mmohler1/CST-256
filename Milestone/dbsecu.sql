@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 12, 2021 at 02:46 AM
+-- Generation Time: Feb 22, 2021 at 11:53 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.4.1
 
@@ -27,9 +27,55 @@ USE `dbsecu`;
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `efolio`
+--
+
+DROP TABLE IF EXISTS `efolio`;
+CREATE TABLE `efolio` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `History` varchar(255) NOT NULL,
+  `Skills` varchar(255) NOT NULL,
+  `Education` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `efolio`
+--
+
+INSERT INTO `efolio` (`id`, `History`, `Skills`, `Education`) VALUES
+(5, 'Drummerss', 'Hits', '7th Grade'),
+(3, 'Animation', 'Stick Figures', '4th Grade'),
+(5, 'jfdjk', 'dfkajf', 'dfakjfdj'),
+(3, 'Stuff', 'Things', 'My head');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `job`
+--
+
+DROP TABLE IF EXISTS `job`;
+CREATE TABLE `job` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `jname` varchar(255) NOT NULL,
+  `requirement` varchar(255) NOT NULL,
+  `summary` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `job`
+--
+
+INSERT INTO `job` (`id`, `jname`, `requirement`, `summary`) VALUES
+(3, 'Chief', 'Working a stove', 'Doing the thing where you make stuff on plates taste good because lets be fair food tastes good when cooked with grace. Why the heck did this not work a second ago? Was it a flook or is everything good?');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `migrations`
 --
 
+DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -50,6 +96,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- Table structure for table `password_resets`
 --
 
+DROP TABLE IF EXISTS `password_resets`;
 CREATE TABLE `password_resets` (
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -62,6 +109,7 @@ CREATE TABLE `password_resets` (
 -- Table structure for table `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -79,13 +127,26 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `roles`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(3, 'Michael', 'mmohler1@my.gcu.edu', 'admin', NULL, '$2y$10$0X7Tu6WN9CANC0FcmPVHiO8b.bEBcaYtPeszqfqTGWdTbCJkg0eZ2', 'L1FYcj0WE4wthyGOQvDWUDyRAiJnqeEkZtu89cGK8j2fLv9oy1Ksc7GzWJAG', '2021-02-11 03:55:09', '2021-02-11 03:55:09'),
-(4, 'Kyle', 'Kyle@gmail.com', 'suspended', NULL, '$2y$10$Vhu78h.ekhT91z5xCkbgeeENgkPfWfKo5JOYFVNO8P5z76c2jFo6u', NULL, '2021-02-12 01:43:58', '2021-02-12 01:43:58'),
-(5, 'Cilantro', 'Cilantro@yahoo.com', 'user', NULL, '$2y$10$/QVhMFRYvikvBC/BnS1Zl.EcLNzLjygPqd7Epx1Cfl8YJ/M.Lq4hu', NULL, '2021-02-12 02:48:06', '2021-02-12 02:48:06');
+(3, 'Michael', 'mmohler1@my.gcu.edu', 'admin', NULL, '$2y$10$0X7Tu6WN9CANC0FcmPVHiO8b.bEBcaYtPeszqfqTGWdTbCJkg0eZ2', '5SZP4VqgF3pRPTI8plWv8IPS38irRpgrCi4b1dSQ2Lh16DFNjhNiwPlVeD9C', '2021-02-11 03:55:09', '2021-02-11 03:55:09'),
+(5, 'Cilantro', 'Cilantro@yahoo.com', 'user', NULL, '$2y$10$/QVhMFRYvikvBC/BnS1Zl.EcLNzLjygPqd7Epx1Cfl8YJ/M.Lq4hu', NULL, '2021-02-12 02:48:06', '2021-02-12 02:48:06'),
+(6, 'Kyle', 'Kyle@gmail.com', 'suspended', NULL, '$2y$10$4t2u.M6QELduSQcFhkjGjO6QVpFwaH5JGuMpIK1BLwFBNOJ8po7jK', NULL, '2021-02-12 14:27:21', '2021-02-12 14:27:21'),
+(7, 'Administration', 'Root@gmail.com', 'user', NULL, '$2y$10$gkgvE6XP3ts3jxyum/srY.LYzfS3K/Y1neQJSbIrpYZf/Ry0AYyI6', NULL, '2021-02-23 06:52:18', '2021-02-23 06:52:18');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `efolio`
+--
+ALTER TABLE `efolio`
+  ADD KEY `eConstraint` (`id`);
+
+--
+-- Indexes for table `job`
+--
+ALTER TABLE `job`
+  ADD KEY `jconstraint` (`id`);
 
 --
 -- Indexes for table `migrations`
@@ -120,7 +181,23 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `efolio`
+--
+ALTER TABLE `efolio`
+  ADD CONSTRAINT `eConstraint` FOREIGN KEY (`id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `job`
+--
+ALTER TABLE `job`
+  ADD CONSTRAINT `jconstraint` FOREIGN KEY (`id`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
