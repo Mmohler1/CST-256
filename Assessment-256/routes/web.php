@@ -18,7 +18,7 @@ Route::get('/', function () {
 
 Route::get('/assessment', 'AssessmentController@index')->name('assessment');
 
-Route::get('/doAnimal', 'AssessmentController@saveAnimal');
+Route::post('/doAnimal', 'AssessmentController@saveAnimal');
 
 
 //Copy and pasted from another assignment to check why this isn't working
