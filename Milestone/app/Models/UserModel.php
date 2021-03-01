@@ -14,7 +14,7 @@ class UserModel
     public function __construct($id, $name, $roles, $email)
     {
         $this->id = $id;
-        $this->name = $name;
+        $this->username = $name;
         $this->roles = $roles;
         $this->email = $email;
         

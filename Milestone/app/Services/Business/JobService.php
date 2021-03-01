@@ -44,6 +44,16 @@ class JobService
         
     }
     
+    //Returns array of job list matching userID
+    public function everyJob()
+    {
+        $jobDAO  = new JobDAO();
+        
+        return $jobDAO->allJobs();
+        
+        
+    }
+    
     //Validation Rules to be returned
     public function validateJob(Request $request)
     {

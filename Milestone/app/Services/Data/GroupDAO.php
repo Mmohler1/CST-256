@@ -2,7 +2,7 @@
 namespace App\Services\Data;
 
 use Carbon\Exceptions\Exception;
-use App\Models\JobModel;
+use App\Models\GroupModel;
 use App\Services\Data\Utility\DBConnect;
 
 /*
@@ -11,7 +11,7 @@ use App\Services\Data\Utility\DBConnect;
  * Michael Mohler 
  * 2/15/2021
  */
-class JobDAO
+class GroupDAO
 {
     private $conn;
     private $dbname = "dbSecu";
@@ -30,17 +30,19 @@ class JobDAO
     }
     
     
-    //Add Job to Database
-    public function addJob(JobModel $jobData)
+    //Add user to Group
+    public function joinGroup(GroupModel $groupData)
     {
         
         try
         {
             
-            $this->dbQuery = "INSERT INTO job (id, jname, requirement, summary)
-                VALUES ((SELECT id FROM users WHERE id = '{$jobData->getId()}'),
-                '{$jobData->getName()}', '{$jobData->getRequirement()}', '{$jobData->getSummary()}')";
+            $this->dbQuery = "INSERT INTO groups (groupName, id, userName, creatorId)
+                VALUES ('{$groupData->getGroupName()}',(SELECT id FROM users WHERE id = '{$groupData->getId()}'),
+                (SELECT name FROM users WHERE id = '{$groupData->getId()}'), '{$groupData->getCreatorId()}')";
             
+            
+
             
             if (mysqli_query($this->connection, $this->dbQuery))
             {
@@ -61,47 +63,16 @@ class JobDAO
         }
     }
     
-    //Update Job to Database
-    public function updateJob(JobModel $jobData, string $compare)
+
+    //user leaves group by deleting them from the database
+    public function leaveGroup(GroupModel $groupData)
     {
         
         try
         {
             
             
-            $this->dbQuery = "Update job
-                SET jname = '{$jobData->getName()}', requirement = '{$jobData->getRequirement()}', summary = '{$jobData->getSummary()}'
-                WHERE jname = '$compare' AND id = '{$jobData->getId()}';";
-            
-            
-            if (mysqli_query($this->connection, $this->dbQuery))
-            {
-                $this->conn->closeDbConnect();
-                return true;
-                
-            }
-            else
-            {
-                $this->conn->closeDbConnect();
-                return false;
-            }
-            
-        }
-        catch(Exception $e)
-        {
-            echo $e->getMessage();
-        }
-    }
-    
-    //Delete Job to Database
-    public function deleteJob(int $userID, string $userjname)
-    {
-        
-        try
-        {
-            
-            
-            $this->dbQuery = "DELETE FROM job WHERE id = '$userID' AND jname = '$userjname'";
+            $this->dbQuery = "DELETE FROM groups WHERE id = '{$groupData->getId()}' AND groupName = '{$groupData->getGroupName()}'";
             
             
             if (mysqli_query($this->connection, $this->dbQuery))
@@ -124,17 +95,55 @@ class JobDAO
     }
     
     
-    //Sends portfolia data from the database based on the users ID
-    public function viewJob(int $userID)
+    
+    //Delete Group from database
+    public function deleteGroup(string $groupName, int $groupId)
     {
         
         try
         {
             
-            $this->dbQuery = ("Select * FROM job WHERE id = '$userID';");
+            
+            $this->dbQuery = "DELETE FROM groups WHERE groupName = '$groupName' AND creatorId = '$groupId'";
+            
+            
+            if (mysqli_query($this->connection, $this->dbQuery))
+            {
+                $this->conn->closeDbConnect();
+                return true;
+                
+            }
+            else
+            {
+                $this->conn->closeDbConnect();
+                return false;
+            }
+            
+        }
+        catch(Exception $e)
+        {
+            echo $e->getMessage();
+        }
+    }
+    
+
+    
+    
+    
+
+    
+    
+    //make array of users in the group
+    public function groupsUsers(string $groupName)
+    {
+        
+        try
+        {
+            
+            $this->dbQuery = ("Select * FROM groups WHERE groupName = '$groupName';");
             
             //Setup the array
-            $job_array = [];
+            $user_array = [];
             
             if (mysqli_query($this->connection, $this->dbQuery))
             {
@@ -155,26 +164,26 @@ class JobDAO
                     while($row = $result->fetch_assoc())
                     {
                         //Save array as the model
-                        $job_array[$x] = new JobModel($row["id"],
-                            $row["jname"], $row["requirement"], $row["summary"]);
+                        $user_array[$x] = new GroupModel($row["groupName"],
+                            $row["id"], $row["userName"], $row["summary"], $row["creatorId"]);
                         
                         //increment ammount
                         $x = $x + 1;
                     }
                     
                     $this->conn->closeDbConnect();
-                    return $job_array;
+                    return $user_array;
                 }
                 else
                 {
                     $this->conn->closeDbConnect();
-                    return $job_array;
+                    return $user_array;
                 }
             }
             else
             {
                 $this->conn->closeDbConnect();
-                return $job_array;
+                return $user_array;
             }
             
         }
@@ -185,17 +194,18 @@ class JobDAO
     }
     
     
-    //Sends portfolia data from the database based on the users ID
-    public function allJobs()
+    
+    //Shows each individual group for the group page
+    public function allGroups()
     {
         
         try
         {
             
-            $this->dbQuery = ("Select * FROM job;");
+            $this->dbQuery = ("Select * FROM groups WHERE id = creatorId;");
             
             //Setup the array
-            $job_array = [];
+            $user_array = [];
             
             if (mysqli_query($this->connection, $this->dbQuery))
             {
@@ -216,26 +226,90 @@ class JobDAO
                     while($row = $result->fetch_assoc())
                     {
                         //Save array as the model
-                        $job_array[$x] = new JobModel($row["id"],
-                            $row["jname"], $row["requirement"], $row["summary"]);
+                        $user_array[$x] = new GroupModel($row["groupName"],
+                            $row["id"], $row["userName"], $row["summary"], $row["creatorId"]);
                         
                         //increment ammount
                         $x = $x + 1;
                     }
                     
                     $this->conn->closeDbConnect();
-                    return $job_array;
+                    return $user_array;
                 }
                 else
                 {
                     $this->conn->closeDbConnect();
-                    return $job_array;
+                    return $user_array;
                 }
             }
             else
             {
                 $this->conn->closeDbConnect();
-                return $job_array;
+                return $user_array;
+            }
+            
+        }
+        catch(Exception $e)
+        {
+            echo $e->getMessage();
+        }
+    }
+    
+    //Add group
+    public function addGroup(GroupModel $groupData)
+    {
+        
+        try
+        {
+            //Note, doesn't actually use the userName class put in, but pulls the name from the database itself.
+            $this->dbQuery = "INSERT INTO groups (groupName, id, userName, summary, creatorId)
+                VALUES ('{$groupData->getGroupName()}',(SELECT id FROM users WHERE id = '{$groupData->getId()}'),
+                (SELECT name FROM users WHERE id = '{$groupData->getId()}'), '{$groupData->getSummary()}', {$groupData->getCreatorId()})";
+            
+            
+            if (mysqli_query($this->connection, $this->dbQuery))
+            {
+                $this->conn->closeDbConnect();
+                return true;
+                
+            }
+            else
+            {
+                $this->conn->closeDbConnect();
+                return false;
+            }
+            
+        }
+        catch(Exception $e)
+        {
+            echo $e->getMessage();
+        }
+    }
+    
+    
+    //update group by comparing old name with possible one. 
+    public function updateGroup(GroupModel $groupData, string $compare)
+    {
+        
+        try
+        {
+            
+            $this->dbQuery = "Update groups
+            SET groupName = '{$groupData->getGroupName()}', summary = '{$groupData->getSummary()}'
+                WHERE groupName = '$compare' AND creatorId = '{$groupData->getCreatorId()}'";
+            
+            
+
+            if(mysqli_query($this->connection, $this->dbQuery))
+            {
+                $this->conn->closeDbConnect();
+                return true;
+                
+            }
+            else
+            {
+                $this->conn->closeDbConnect();
+                return false;
             }
             
         }

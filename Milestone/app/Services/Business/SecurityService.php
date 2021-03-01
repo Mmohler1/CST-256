@@ -8,35 +8,42 @@ use App\Services\Data\SecurityDAO;
 class SecurityService
 {
     //Suspends a user that is put in.
-    public function suspendUser(string $name)
+    public function suspendUser(int $id)
     {
         //Created to use DAO, then run function.
         $secDao = new SecurityDAO;
-        $secDao->addSuspendedUser($name);
+        $secDao->addSuspendedUser($id);
         
     }
     
     //Suspends a user that is put in.
-    public function userToAdmin(string $name)
+    public function userToAdmin(int $id)
     {
         //Created to use DAO, then run function.
         $secDao = new SecurityDAO;
-        $secDao->addAdmin($name);
+        $secDao->addAdmin($id);
         
     }
-    
-    
     
     //Suspends a user that is put in.
-    public function suspendUserPerm(string $name)
+    public function roleToUser(int $id)
     {
         //Created to use DAO, then run function.
         $secDao = new SecurityDAO;
-        $secDao->permSuspendUser($name);
+        $secDao->addUser($id);
         
     }
     
-    //checks if user is suspended
+    //Suspends a user that is put in.
+    public function suspendUserPerm(int $id)
+    {
+        //Created to use DAO, then run function.
+        $secDao = new SecurityDAO;
+        $secDao->permSuspendUser($id);
+        
+    }
+    
+    //checks role of user
     public function checkWhatRole(string $email)
     {
         //Created to use DAO, then run function.
@@ -46,7 +53,17 @@ class SecurityService
         return $secDao->checkRole($email);
 
     }
-    
+ 
+    //Returns array of users
+    public function showTheUsers()
+    {
+        //Created to use DAO, then run function.
+        $secDao = new SecurityDAO;
+        
+        
+        return $secDao->showUsers();
+        
+    }
     
     
 }

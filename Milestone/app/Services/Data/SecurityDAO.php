@@ -1,6 +1,6 @@
 <?php
 namespace App\Services\Data;
-
+use App\Models\UserModel;
 
 /*
  * This class contains methods regarding connecting to the database.
@@ -45,7 +45,7 @@ class SecurityDAO
     }
     
     //Suspends user by adding it to their role
-    public function addSuspendedUser(string $name)
+    public function addSuspendedUser(int $id)
     {
 
         
@@ -53,9 +53,9 @@ class SecurityDAO
         $dbConn = $this->dbConnection();
         
         
-        //First Query checks to see if anyone is in the table with that name
+        //First Query checks to see if anyone is in the table with that id
         $sql = ("SELECT * FROM users
-                WHERE name = '$name';");
+                WHERE id = '$id';");
         
         
         $result = $dbConn->query($sql);
@@ -66,7 +66,7 @@ class SecurityDAO
             //Updates role to suspended
             $sql = ("UPDATE users
             SET roles = 'suspended'
-            WHERE name = '$name'; ");
+            WHERE id = '$id'; ");
             
             //If the query goes through then tell the user
             if ($dbConn->query($sql) === TRUE)
@@ -92,7 +92,7 @@ class SecurityDAO
     
     
     //Suspends user Permanently by removing them from users table.
-    public function permSuspendUser(string $name)
+    public function permSuspendUser(int $id)
     {
         
         
@@ -100,9 +100,9 @@ class SecurityDAO
         $dbConn = $this->dbConnection();
         
         
-        //First Query checks to see if anyone is in the table with that name
+        //First Query checks to see if anyone is in the table with that id
         $sql = ("SELECT * FROM users
-                WHERE name = '$name';");
+                WHERE id = '$id';");
         $result = $dbConn->query($sql);
         
         //If someone is in the database insert them into table
@@ -110,7 +110,7 @@ class SecurityDAO
         {
 
             //Deletes user from users
-            $sql = ("DELETE FROM users WHERE name = '$name';");
+            $sql = ("DELETE FROM users WHERE id = '$id';");
 
             //Executes all 3 querys
             if ($dbConn->query($sql) === TRUE)
@@ -136,7 +136,7 @@ class SecurityDAO
     }
     
     //Suspends user by adding their info to the suspended table
-    public function addAdmin(string $name)
+    public function addAdmin(int $id)
     {
         
         
@@ -144,9 +144,9 @@ class SecurityDAO
         $dbConn = $this->dbConnection();
         
         
-        //First Query checks to see if anyone is in the table with that name
+        //First Query checks to see if anyone is in the table with that id
         $sql = ("SELECT * FROM users
-                WHERE name = '$name';");
+                WHERE id = '$id';");
         
         
         $result = $dbConn->query($sql);
@@ -157,7 +157,7 @@ class SecurityDAO
             //Updates role to admin
             $sql = ("UPDATE users
             SET roles = 'admin'
-            WHERE name = '$name'; ");
+            WHERE id = '$id'; ");
             
             //If the query goes through then tell the user
             if ($dbConn->query($sql) === TRUE)
@@ -181,6 +181,52 @@ class SecurityDAO
         
     }
     
+    //Make user a user by changing thier role
+    public function addUser(int $id)
+    {
+        
+        
+        //Connects to Database
+        $dbConn = $this->dbConnection();
+        
+        
+        //First Query checks to see if anyone is in the table with that id
+        $sql = ("SELECT * FROM users
+                WHERE id = '$id';");
+        
+        
+        $result = $dbConn->query($sql);
+        
+        //If someone is in the database insert them into table
+        if($result->num_rows > 0)
+        {
+            //Updates role to admin
+            $sql = ("UPDATE users
+            SET roles = 'user'
+            WHERE id = '$id'; ");
+            
+            //If the query goes through then tell the user
+            if ($dbConn->query($sql) === TRUE)
+            {
+                echo "User was made into a user";
+            }
+            else
+            {
+                echo "User could not be made into a User";
+            }
+        }
+        //If not say user not found
+        else
+        {
+            echo "User not found";
+        }
+        
+        
+        //Closses Connection
+        $dbConn->close();
+        
+    }
+    
     //Check if user is admin or suspended
     public function checkRole(string $email)
     {
@@ -190,7 +236,7 @@ class SecurityDAO
         $dbConn = $this->dbConnection();
         
         
-        //First Query checks to see if anyone is in the table with that name
+        //First Query checks to see if anyone is in the table with that id
         $sql = ("SELECT roles FROM users 
                     WHERE email = '$email';");
         
@@ -213,6 +259,47 @@ class SecurityDAO
         
         //Closses Connection
         $dbConn->close();
+        
+    }
+    
+    //Shows list of all users
+    public function showUsers()
+    {
+        //Setup the array
+        $users_array = [];
+        
+        //Connects to Database
+        $dbConn = $this->dbConnection();
+        
+        
+        //First Query checks to see if anyone is in the table with that id
+        $sql = ("SELECT id, name, email, roles FROM users;");
+        
+        
+        $result = $dbConn->query($sql);
+        
+        //If someone is in the database insert them into table
+        if($result->num_rows > 0)
+        {
+            //for loop
+            $x = 0;
+            //loop for all results
+            while($row = $result->fetch_assoc())
+            {
+                //Save array as the model
+                $users_array[$x] = new UserModel($row["id"],
+                    $row["name"], $row["roles"], $row["email"]);
+                
+                //increment ammount
+                $x = $x + 1;
+            }
+            
+        }
+
+        
+        //Closses Connection
+        $dbConn->close();
+        return $users_array;
         
     }
 }

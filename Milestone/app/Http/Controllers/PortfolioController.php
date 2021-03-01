@@ -40,7 +40,7 @@ class PortfolioController extends Controller
         
  
         //change to portfolio or something
-        return view('/portfolio', ['portfolios' => $portfolio_array]);
+        return view('eportfolio/portfolio', ['portfolios' => $portfolio_array]);
     }
     
     
@@ -48,7 +48,7 @@ class PortfolioController extends Controller
     public function addPortfolio(Request $request)
     {
         
-        return view('/addportfolio');
+        return view('eportfolio/addportfolio');
     }
     
     //For security on update page.
@@ -56,7 +56,7 @@ class PortfolioController extends Controller
     {
         
         
-        return view('updatePortfolio');
+        return view('eportfolio/updatePortfolio');
     }
     
     //Takes user to update page with info
@@ -64,7 +64,7 @@ class PortfolioController extends Controller
     {
 
         
-        return redirect('updatePortfolio')->with('oldHistory', request()->get('hiddenHistory')) 
+        return redirect('eportfolio/updatePortfolio')->with('oldHistory', request()->get('hiddenHistory')) 
                                             ->with('oldSkills', request()->get('hiddenSkills'))
                                             ->with('oldEducation', request()->get('hiddenEducation'));
     }
@@ -103,7 +103,7 @@ class PortfolioController extends Controller
         
 
         
-        return view('/portfolio', ['portfolios' => $portfolio_array]);  
+        return view('eportfolio/portfolio', ['portfolios' => $portfolio_array]);  
     }
     
     
@@ -128,7 +128,7 @@ class PortfolioController extends Controller
         //Setups up portfolio again for the next page
         $portfolio_array = $this->showPortfolios($portfolioData->getId());
 
-        return view('/portfolio', ['portfolios' => $portfolio_array]);      
+        return view('eportfolio/portfolio', ['portfolios' => $portfolio_array]);      
     }
     
     //Displays information to the portfolio page.
@@ -146,7 +146,7 @@ class PortfolioController extends Controller
         
         
         //change to portfolio or something
-        return view('/portfolio', ['portfolios' => $portfolio_array]);
+        return view('eportfolio/portfolio', ['portfolios' => $portfolio_array]);
         
         
     }

@@ -38,7 +38,7 @@ class JobController extends Controller
         
         
       
-        return view('/job', ['jobs' => $job_array]);
+        return view('posting/job', ['jobs' => $job_array]);
         
 
     }
@@ -48,7 +48,22 @@ class JobController extends Controller
     {
         
         
-        return view('/addJob');
+        return view('posting/addJob');
+    }
+    
+    public function allJobs()
+    {
+        
+        $jobServ  = new JobService();
+        
+        //Change to specific users id so someone can view others page
+        $every_job = $jobServ->everyJob();
+        
+        
+        
+        return view('posting/job', ['jobs' => $every_job]);
+        
+        
     }
     
     //Takes user to update page with info
@@ -56,7 +71,7 @@ class JobController extends Controller
     {
         
         
-        return view('/updateJob');
+        return view('posting/updateJob');
     }
     
     
@@ -65,7 +80,7 @@ class JobController extends Controller
     {
         
         
-        return redirect('updateJob')->with('oldName', request()->get('hiddenName'))
+        return redirect('posting/updateJob')->with('oldName', request()->get('hiddenName'))
         ->with('oldRequirement', request()->get('hiddenRequirement'))
         ->with('oldSummary', request()->get('hiddenSummary'));
     }
@@ -101,7 +116,7 @@ class JobController extends Controller
         //Setups up job again for the next page
         $job_array = $this->showJobs($jobData->getId());
         
-        return view('/job', ['jobs' => $job_array]);
+        return view('posting/job', ['jobs' => $job_array]);
     }
     
     
@@ -128,7 +143,7 @@ class JobController extends Controller
         //Setups up job again for the next page
         $job_array = $this->showJobs($jobData->getId());
         
-        return view('/job', ['jobs' => $job_array]);
+        return view('posting/job', ['jobs' => $job_array]);
     }
     
     //Displays information to the job page.
@@ -136,7 +151,7 @@ class JobController extends Controller
     {
         $jobServ  = new JobService();
         
-        $jobServ->deleteAJob(request()->get('hiddenId') , request()->get('hiddenName'), );
+        $jobServ->deleteAJob(request()->get('hiddenId') , request()->get('hiddenName') );
         
         
         //Reload the page, but with the new array.
@@ -146,8 +161,8 @@ class JobController extends Controller
         
         
         //change to job or something
-        return view('/job', ['jobs' => $job_array]);
-        
+        return view('posting/job', ['jobs' => $job_array]);
+   
         
     }
     
