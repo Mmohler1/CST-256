@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 22, 2021 at 11:53 PM
+-- Generation Time: Mar 01, 2021 at 05:03 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.4.1
 
@@ -43,10 +43,39 @@ CREATE TABLE `efolio` (
 --
 
 INSERT INTO `efolio` (`id`, `History`, `Skills`, `Education`) VALUES
-(5, 'Drummerss', 'Hits', '7th Grade'),
+(5, 'Drummer', 'Hits things', '7th Grade'),
 (3, 'Animation', 'Stick Figures', '4th Grade'),
 (5, 'jfdjk', 'dfkajf', 'dfakjfdj'),
-(3, 'Stuff', 'Things', 'My head');
+(3, 'kdfjkjaf', 'dkajfkdjaf', 'dkajfdj'),
+(3, 'Walmart', 'Basic Math', 'High School');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `groups`
+--
+
+DROP TABLE IF EXISTS `groups`;
+CREATE TABLE `groups` (
+  `groupName` varchar(255) NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `userName` varchar(255) NOT NULL,
+  `summary` text,
+  `creatorId` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `groups`
+--
+
+INSERT INTO `groups` (`groupName`, `id`, `userName`, `summary`, `creatorId`) VALUES
+('Programming Stuff', 3, 'Michael', 'Anything but php because man do I hate php. You know, not that bad', 3),
+('Education', 7, 'Administration', NULL, 7),
+('stuff', 7, 'Administration', 'Things and stuff', 7),
+('Game Design', 3, 'Michael', 'Pew Pew', 3),
+('Education', 5, 'Cilantro', NULL, 7),
+('Education', 3, 'Michael', NULL, 7),
+('Programming Stuff', 5, 'Cilantro', NULL, 3);
 
 -- --------------------------------------------------------
 
@@ -67,7 +96,10 @@ CREATE TABLE `job` (
 --
 
 INSERT INTO `job` (`id`, `jname`, `requirement`, `summary`) VALUES
-(3, 'Chief', 'Working a stove', 'Doing the thing where you make stuff on plates taste good because lets be fair food tastes good when cooked with grace. Why the heck did this not work a second ago? Was it a flook or is everything good?');
+(3, 'Chief', 'Working a stove', 'Doing the thing where you make stuff on plates taste good because lets be fair food tastes good when cooked with grace. Why the heck did this not work a second ago? Was it a flook or is everything good?'),
+(3, 'ajfjad', 'dfdaf', 'kdajfkajf'),
+(3, 'dafjf', 'dkfajfj', 'dkajfkajlfjadkf'),
+(7, 'Random', 'From Admin', 'akdfjakfjka jfkaj fkajfkj af');
 
 -- --------------------------------------------------------
 
@@ -127,10 +159,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `roles`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(3, 'Michael', 'mmohler1@my.gcu.edu', 'admin', NULL, '$2y$10$0X7Tu6WN9CANC0FcmPVHiO8b.bEBcaYtPeszqfqTGWdTbCJkg0eZ2', '5SZP4VqgF3pRPTI8plWv8IPS38irRpgrCi4b1dSQ2Lh16DFNjhNiwPlVeD9C', '2021-02-11 03:55:09', '2021-02-11 03:55:09'),
-(5, 'Cilantro', 'Cilantro@yahoo.com', 'user', NULL, '$2y$10$/QVhMFRYvikvBC/BnS1Zl.EcLNzLjygPqd7Epx1Cfl8YJ/M.Lq4hu', NULL, '2021-02-12 02:48:06', '2021-02-12 02:48:06'),
-(6, 'Kyle', 'Kyle@gmail.com', 'suspended', NULL, '$2y$10$4t2u.M6QELduSQcFhkjGjO6QVpFwaH5JGuMpIK1BLwFBNOJ8po7jK', NULL, '2021-02-12 14:27:21', '2021-02-12 14:27:21'),
-(7, 'Administration', 'Root@gmail.com', 'user', NULL, '$2y$10$gkgvE6XP3ts3jxyum/srY.LYzfS3K/Y1neQJSbIrpYZf/Ry0AYyI6', NULL, '2021-02-23 06:52:18', '2021-02-23 06:52:18');
+(3, 'Michael', 'mmohler1@my.gcu.edu', 'admin', NULL, '$2y$10$0X7Tu6WN9CANC0FcmPVHiO8b.bEBcaYtPeszqfqTGWdTbCJkg0eZ2', 'tbpmb5heLcuqOk0lp90vgdezPZDRUqhHO1X6Qd9p5GRNiYLp3AaU1yCTv7d1', '2021-02-11 03:55:09', '2021-02-11 03:55:09'),
+(5, 'Cilantro', 'Cilantro@yahoo.com', 'user', NULL, '$2y$10$/QVhMFRYvikvBC/BnS1Zl.EcLNzLjygPqd7Epx1Cfl8YJ/M.Lq4hu', '0veJ7rEeDtxqItCaP0tIEF4p58voYK6uuaVzKQFw9fGHBmW4xRifcFzv5CjT', '2021-02-12 02:48:06', '2021-02-12 02:48:06'),
+(7, 'Administration', 'Root@gmail.com', 'admin', NULL, '$2y$10$gkgvE6XP3ts3jxyum/srY.LYzfS3K/Y1neQJSbIrpYZf/Ry0AYyI6', NULL, '2021-02-23 06:52:18', '2021-02-23 06:52:18');
 
 --
 -- Indexes for dumped tables
@@ -141,6 +172,12 @@ INSERT INTO `users` (`id`, `name`, `email`, `roles`, `email_verified_at`, `passw
 --
 ALTER TABLE `efolio`
   ADD KEY `eConstraint` (`id`);
+
+--
+-- Indexes for table `groups`
+--
+ALTER TABLE `groups`
+  ADD KEY `id` (`id`);
 
 --
 -- Indexes for table `job`
@@ -192,6 +229,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `efolio`
   ADD CONSTRAINT `eConstraint` FOREIGN KEY (`id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `groups`
+--
+ALTER TABLE `groups`
+  ADD CONSTRAINT `gConstraint` FOREIGN KEY (`id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `job`
