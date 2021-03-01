@@ -8,52 +8,83 @@
 <div class="card">
                                     
 	<div class="card-header">Manage Users</div>
-		<div class="card-body">
+	<div class="card-body">
 		
-    	<br/>
-    	<h2>Suspend user by name</h2>
-		<form action = "doSuspend" method = "POST"> <!-- Suspeends user -->
-    		@csrf
-    		User's name: <input type = "text" name = "username" />
-
-			<br/>
-    		<input type = "submit" value = "Suspend" />
-
-		</form>
-
-
-		    	<br/>
-    	<h2>Suspend user by name permanently</h2>
-		<form action = "doPermSuspend" method = "POST"> <!-- Permanently Suspends user -->
-    		@csrf
-    		User's name: <input type = "text" name = "username" />
-
-			<br/>
-    		<input type = "submit" value = "Permanently Suspend" />
-
-		</form>
 		
-		<br/>
-		<br/>
+		<!-- Table of users that the Admins can quickly access -->
 		
-		<h2>Make user admin by name</h2>
-		<form action = "doAdmin" method = "POST"><!-- Makes user admin -->
-    		@csrf
-    		User's name: <input type = "text" name = "username" />
+		<table id="theUsers">
+			<tr>
+    			<th>Users</th>
+    			<th>Id</th>
+    			<th>Email</th>
+    			<th>Role</th>
+    			<th>Actions</th>
+			</tr>
+		<?php foreach($users as $people): ?>
+			<tr>
+				<td>{{ $people->getUsername() }}</td>
+				<td>{{ $people->getId() }}</td>
+				<td>{{ $people->getEmail() }}</td>
+				<td>{{ $people->getRoles() }}</td>
+				
+				
+				<!-- Table specifically for admin actions -->
+				<td>
+					<div class = "button-straight-flex">
 
-			<br/>
-    		<input type = "submit" value = "Make Admin" />
-
-		</form>
-
+						<div>
+                			<form action = "doSuspend" method = "POST"> <!-- Suspeends user -->
+                        		@csrf
+                        		<input type = "hidden" name = "id" value = "{{ $people->getId() }}" />
+                    
+                    			<br/>
+                        		<input type = "submit" value = "Suspend" />
+                      		</form>
+    					</div> 
+    					<div>
+        					<form action = "doPermSuspend" method = "POST"> <!-- Permanently Suspends user -->
+                        		@csrf
+                        		<input type = "hidden" name = "id" value = "{{ $people->getId() }}"/>
+                    
+                    			<br/>
+                        		<input type = "submit" value = "Permanently Suspend" />
+                    		</form>
+                		</div>
+                		<div>
+                    		<form action = "doAdmin" method = "POST"><!-- Makes user admin -->
+                        		@csrf
+                        		<input type = "hidden" name = "id" value = "{{ $people->getId() }}" />
+                    
+                    			<br/>
+                        		<input type = "submit" value = "Make Admin" />
+                    
+                    		</form>
+                		</div>
+                		<div>
+                    		<form action = "doUser" method = "POST"><!-- Makes user admin -->
+                        		@csrf
+                        		<input type = "hidden" name = "id" value = "{{ $people->getId() }}" />
+                    
+                    			<br/>
+                        		<input type = "submit" value = "Make User" />
+                    
+                    		</form>
+                		</div>
+                		
+					</div>
+				</td>
+			</tr>
+		
+		<?php endforeach; ?>
+		</table>
+	
 	</div>
-
+</div>
 @else
 <div class="card">
 	<div class="card-header">Error</div>
 		<h2>You don't have access to this page!</h2>
-
-	</div>
 </div>
 @endif
 @endsection
