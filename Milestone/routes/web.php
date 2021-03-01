@@ -33,40 +33,69 @@ Route::post('/doAdmin','AdminController@doAdmin');
 
 Route::post('/doPermSuspend','AdminController@doPermSuspend');
 
+Route::post('/doUser','AdminController@doUser');
+
 
 //Routes for portfolio
 
-Route::get('/portfolio', 'PortfolioController@index');
-Route::get('/addPortfolio', 'PortfolioController@addPortfolio'); 
+Route::get('eportfolio/portfolio', 'PortfolioController@index');
+Route::get('eportfolio/addPortfolio', 'PortfolioController@addPortfolio'); 
 
-Route::post('/doAdd','PortfolioController@createPortfolio');
+Route::post('eportfolio/doAdd','PortfolioController@createPortfolio');
 
 
 
-Route::post('/updateAPortfolio','PortfolioController@updatePortfolioRedirect'); //for getting to update page
+Route::post('eportfolio/updateAPortfolio','PortfolioController@updatePortfolioRedirect'); //for getting to update page
 
-Route::get('/updatePortfolio', 'PortfolioController@updatePortfolio');
+Route::get('eportfolio/updatePortfolio', 'PortfolioController@updatePortfolio');
 
-Route::post('/doUpdate','PortfolioController@changePortfolio');
+Route::post('eportfolio/doUpdate','PortfolioController@changePortfolio');
 
-Route::post('/doDelete','PortfolioController@deletePortfolio');
+Route::post('eportfolio/doDelete','PortfolioController@deletePortfolio');
 
 
 //Routes for job 
-Route::get('/job', 'JobController@index');
+Route::get('posting/job', 'JobController@index');
 
-Route::get('/addJob', 'JobController@addJob');
+Route::get('posting/allJobs', 'JobController@allJobs');
 
-Route::post('/doAddJob','JobController@createJob');
+Route::get('posting/addJob', 'JobController@addJob');
 
-
-
-Route::post('/updateAJob','JobController@updateJobRedirect'); //for getting to update page
-
-Route::get('/updateJob', 'JobController@updateJob');
-
-Route::post('/doUpdateJob','JobController@changeJob');
-
-Route::post('/doDeleteJob','JobController@deleteJob');
+Route::post('posting/doAddJob','JobController@createJob');
 
 
+
+Route::post('posting/updateAJob','JobController@updateJobRedirect'); //for getting to update page
+
+Route::get('posting/updateJob', 'JobController@updateJob');
+
+Route::post('posting/doUpdateJob','JobController@changeJob');
+
+Route::post('posting/doDeleteJob','JobController@deleteJob');
+
+
+
+
+//Routes for groups
+
+Route::get('/group', 'GroupController@index');
+
+Route::get('/addGroup', 'GroupController@createGroup'); 
+
+Route::get('/uniqueGroup', 'GroupController@specificGroup'); 
+
+Route::get('/updateGroup', 'GroupController@changeGroup');
+
+
+//Basically gets, but use them as posts
+Route::get('/doLeaveGroupe', 'GroupController@leaveGroupe');
+Route::get('/doJoinGroupe', 'GroupController@addGroupe');
+
+
+Route::post('/doAddGroup','GroupController@addGroup');
+
+Route::post('/doDeleteGroup','GroupController@deleteGroup');
+
+Route::post('/updateAGroup','GroupController@changeGroupRedirect'); //for getting to update page
+
+Route::post('/doUpdateGroup','GroupController@updateGroup');
