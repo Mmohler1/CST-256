@@ -1,0 +1,74 @@
+  .footstuff {
+  bottom: 0;
+  margin: auto;
+  height: 10px;
+
+}
+  
+	.center-info
+	{
+	
+	
+	font-family: "Lucida Console", "Courier New", monospace;
+	margin: auto;
+	background: white;
+	
+	padding-top: 20px;
+	padding-bottom: 10px;
+	
+	border-radius: 10px;
+	border: 2px solid;
+
+	box-shadow: 2px 4px #4E4338;
+	
+	width: 75%
+	
+	}
+	
+	.just-center
+	{
+		margin: auto;
+		padding-bottom: 20px;
+	}
+
+	.label-title-info
+	{
+		font-size: 20px;
+		font-weight: bold;
+		
+	}
+
+
+	.label-detail-info
+	{
+		word-wrap: break-word;
+	}
+	
+	.button-straight-flex
+	{
+		
+		display: flex;
+		justify-content: center;
+	}
+	
+	#theUsers 
+	{
+		margin:auto;
+		border: 2px solid;
+	}
+	
+	#theUsers td, #theUsers th
+	{
+		border: 1px solid;
+		padding: 10px;
+	}
+	
+	#theUsers th 
+	{
+		background: #97B4BD;
+		color: 		#eee9e3;
+		border: 1px solid black;
+	}
+	
+
+	
