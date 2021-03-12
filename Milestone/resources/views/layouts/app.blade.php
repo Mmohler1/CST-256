@@ -74,14 +74,17 @@
                                         Account
                                     </a>
                                     
-                                    <a class="dropdown-item" href="eportfolio/portfolio"> <!-- New Dropdown 2/5/21 -->
+                                    <a class="dropdown-item" href="portfolio"> <!-- New Dropdown 2/5/21 -->
                                         My Portfolio
                                     </a>
-                                  	<a class="dropdown-item" href="group"> <!-- New Dropdown 2/5/21 -->
+                                  	<a class="dropdown-item" href="group"> <!-- New Dropdown 2/28/21 -->
                                      	Groups
                                     </a>
+                             		<a class="dropdown-item" href="searchJob"> <!-- New Dropdown 3/8/21 -->
+                                     	Search Jobs
+                                    </a>
                                  	@if(Auth::user()->getRoleAttribute(Auth::user()->email) == "admin")             
-                                   	<a class="dropdown-item" href="posting/job"> <!-- New Dropdown 2/20/21 -->
+                                   	<a class="dropdown-item" href="job"> <!-- New Dropdown 2/20/21 -->
                                             Post Job
                                         </a>
                                             <!-- If user is admin then show admin page -->             

@@ -19,7 +19,7 @@
                     <?php foreach($jobs as $details): ?>
                  	<div class="center-info">     	
                            	
-                           <label class="label-title-info">Position</label><br/>
+                           <label class="label-title-info">Positions</label><br/>
                            <label class="label-detail-info">{{ $details->getName() }}</label><br/>
                            <br/>
                            
@@ -30,7 +30,11 @@
                            <label class="label-title-info">Summary</label><br/>
                            <label class="label-detail-info">{{ $details->getSummary() }}</label><br/>
                            <br/>
-                           	                 
+                           	       
+                       	  	<form action = "uniqueJob" method = "GET">
+                      			<input type="hidden" name="jobid" value="{{ $details->getJobId() }}">
+                       		<input type = "submit" value = "Go To Page!" />
+                       		</form>   
                        
                        <br/>
                        

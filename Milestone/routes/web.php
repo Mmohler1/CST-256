@@ -38,40 +38,50 @@ Route::post('/doUser','AdminController@doUser');
 
 //Routes for portfolio
 
-Route::get('eportfolio/portfolio', 'PortfolioController@index');
-Route::get('eportfolio/addPortfolio', 'PortfolioController@addPortfolio'); 
+Route::get('portfolio', 'PortfolioController@index');
+Route::get('addPortfolio', 'PortfolioController@addPortfolio'); 
 
-Route::post('eportfolio/doAdd','PortfolioController@createPortfolio');
+Route::post('doAdd','PortfolioController@createPortfolio');
 
 
 
-Route::post('eportfolio/updateAPortfolio','PortfolioController@updatePortfolioRedirect'); //for getting to update page
+Route::post('updateAPortfolio','PortfolioController@updatePortfolioRedirect'); //for getting to update page
 
-Route::get('eportfolio/updatePortfolio', 'PortfolioController@updatePortfolio');
+Route::get('updatePortfolio', 'PortfolioController@updatePortfolio');
 
-Route::post('eportfolio/doUpdate','PortfolioController@changePortfolio');
+Route::post('doUpdate','PortfolioController@changePortfolio');
 
-Route::post('eportfolio/doDelete','PortfolioController@deletePortfolio');
+Route::post('doDelete','PortfolioController@deletePortfolio');
 
 
 //Routes for job 
-Route::get('posting/job', 'JobController@index');
+Route::get('job', 'JobController@index');
 
-Route::get('posting/allJobs', 'JobController@allJobs');
+Route::get('allJobs', 'JobController@allJobs');
 
-Route::get('posting/addJob', 'JobController@addJob');
-
-Route::post('posting/doAddJob','JobController@createJob');
+Route::get('addJob', 'JobController@addJob');
 
 
 
-Route::post('posting/updateAJob','JobController@updateJobRedirect'); //for getting to update page
+Route::get('searchJob', 'JobController@searchJob');
 
-Route::get('posting/updateJob', 'JobController@updateJob');
 
-Route::post('posting/doUpdateJob','JobController@changeJob');
+Route::get('uniqueJob', 'JobController@specificJob'); 
 
-Route::post('posting/doDeleteJob','JobController@deleteJob');
+//Milestone 5
+Route::get('doSearchJob','JobController@lookJob');
+
+
+Route::post('doAddJob','JobController@createJob');
+
+
+Route::post('updateAJob','JobController@updateJobRedirect'); //for getting to update page
+
+Route::get('updateJob', 'JobController@updateJob');
+
+Route::post('doUpdateJob','JobController@changeJob');
+
+Route::post('doDeleteJob','JobController@deleteJob');
 
 
 

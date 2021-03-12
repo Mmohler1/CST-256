@@ -18,7 +18,7 @@
 						
                     <?php foreach($groups as $details): ?>
                  	<div class="center-info">     	
-                           	
+                           
                            <label class="label-title-info">{{ $details->getGroupName() }}</label><br/>
                            
                            <br/>
@@ -38,6 +38,8 @@
                        
                        
                        <!-- Forms used to submit update and delete commands -->
+                      	
+                      	
                       	<div class = "button-straight-flex">
                       		<div>
                                <form action = "updateAGroup" method = "POST">

@@ -15,6 +15,15 @@
                     @endif
 
                     You are logged in!
+                    
+                    <br/><br/>
+                    
+                    <a href="portfolio">Remember to add to your portfolio!</a>
+                    
+                    <br/><br/>
+                    
+                    <a href="allJobs">Take a look at some jobs!</a> 
+                    
                 </div>
             </div>
         </div>
