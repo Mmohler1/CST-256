@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 01, 2021 at 05:03 AM
+-- Generation Time: Mar 12, 2021 at 08:41 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.4.1
 
@@ -46,7 +46,7 @@ INSERT INTO `efolio` (`id`, `History`, `Skills`, `Education`) VALUES
 (5, 'Drummer', 'Hits things', '7th Grade'),
 (3, 'Animation', 'Stick Figures', '4th Grade'),
 (5, 'jfdjk', 'dfkajf', 'dfakjfdj'),
-(3, 'kdfjkjaf', 'dkajfkdjaf', 'dkajfdj'),
+(3, 'FIne!', 'dkajfkdjaf', 'dkajfdj'),
 (3, 'Walmart', 'Basic Math', 'High School');
 
 -- --------------------------------------------------------
@@ -69,13 +69,15 @@ CREATE TABLE `groups` (
 --
 
 INSERT INTO `groups` (`groupName`, `id`, `userName`, `summary`, `creatorId`) VALUES
-('Programming Stuff', 3, 'Michael', 'Anything but php because man do I hate php. You know, not that bad', 3),
+('Programming Stuff', 3, 'Michael', 'Anything but php.', 3),
 ('Education', 7, 'Administration', NULL, 7),
 ('stuff', 7, 'Administration', 'Things and stuff', 7),
-('Game Design', 3, 'Michael', 'Pew Pew', 3),
+('Game Design', 3, 'Michael', 'Pew Pew Pew', 3),
 ('Education', 5, 'Cilantro', NULL, 7),
+('Programming Stuff', 5, 'Cilantro', 'Anything but php.', 3),
+('stuff', 3, 'Michael', NULL, 7),
 ('Education', 3, 'Michael', NULL, 7),
-('Programming Stuff', 5, 'Cilantro', NULL, 3);
+('TV Director', 3, 'Michael', 'Director for an action TV Show. Requires dynamic shots, knowledge on martial arts, and at least 5 years experience.', 3);
 
 -- --------------------------------------------------------
 
@@ -85,6 +87,7 @@ INSERT INTO `groups` (`groupName`, `id`, `userName`, `summary`, `creatorId`) VAL
 
 DROP TABLE IF EXISTS `job`;
 CREATE TABLE `job` (
+  `jobId` bigint(20) UNSIGNED NOT NULL,
   `id` bigint(20) UNSIGNED NOT NULL,
   `jname` varchar(255) NOT NULL,
   `requirement` varchar(255) NOT NULL,
@@ -95,11 +98,24 @@ CREATE TABLE `job` (
 -- Dumping data for table `job`
 --
 
-INSERT INTO `job` (`id`, `jname`, `requirement`, `summary`) VALUES
-(3, 'Chief', 'Working a stove', 'Doing the thing where you make stuff on plates taste good because lets be fair food tastes good when cooked with grace. Why the heck did this not work a second ago? Was it a flook or is everything good?'),
-(3, 'ajfjad', 'dfdaf', 'kdajfkajf'),
-(3, 'dafjf', 'dkfajfj', 'dkajfkajlfjadkf'),
-(7, 'Random', 'From Admin', 'akdfjakfjka jfkaj fkajfkj af');
+INSERT INTO `job` (`jobId`, `id`, `jname`, `requirement`, `summary`) VALUES
+(1, 3, 'Chief', 'Working a stove', 'Doing the thing where you make stuff on plates taste good because lets be fair food tastes good when cooked with grace. Why the heck did this not work a second ago? Was it a flook or is everything good?'),
+(2, 7, 'Random', 'From Admin', 'akdfjakfjka jfkaj fkajfkj af'),
+(3, 3, 'TV Director', 'Dynamic shots, 5 years of experience.', 'Director for an action TV Show. Action involves martial arts, shooting sequences, and car chases.'),
+(4, 3, 'Programmer', 'PHP, Blade, Javascript', 'Making a social media website with job postings, groups, portfolios.'),
+(5, 3, 'Radio Host', '2 Years Experience', 'Hosting a radio show for a country station that has half a million listeners.'),
+(6, 3, 'Javascript', '3 years programming experience', 'Working on a dynamic web page for a department store.'),
+(7, 3, 'Radio Mixer', '4 Years experiences', 'Control the audio and mixing of radio show for a country station.'),
+(8, 3, 'Clean Floors', 'Gradeschool, Good with Mop.', 'Cleaning the floors in an elementary school.'),
+(9, 3, 'Rad Paintings', 'Artist', 'Someone who is willing to make a couple of paintings that look cool.'),
+(10, 7, 'Petcare', '2 Years in Retail', 'Take care of an Array of animals in a pet store.'),
+(11, 7, 'Cashier', 'Highschool Degree', 'Front line cashier focused on checking out customers in an orderly fashion. Radiating with joy for the customers.'),
+(12, 7, 'Window Washers', '2 Years of any work', 'Cleaning the windows of skyscrapers. Dangerous job.'),
+(13, 7, 'Bird Watcher', 'Any experience with animals', 'Taking care of birds at an important bird sanctuary where hundreds of birds of many sizes are held.'),
+(14, 7, 'Decipher Hieroglyphics', 'Dr. In History', 'Deciphering Ancient Egyptian hieroglyphics talking about the sun god ra.'),
+(15, 7, 'Some job', 'Just some space.', 'Finding things to put in here. Ra and other things.'),
+(16, 3, 'Mixer Radio', 'Just a Switch', 'Testing more of these things for the heck of it.'),
+(17, 3, 'Cup Designer', '2 Years in art', 'I have this cool idea of a cup with some letters on it and other things. Letters will be RA.');
 
 -- --------------------------------------------------------
 
@@ -159,8 +175,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `roles`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(3, 'Michael', 'mmohler1@my.gcu.edu', 'admin', NULL, '$2y$10$0X7Tu6WN9CANC0FcmPVHiO8b.bEBcaYtPeszqfqTGWdTbCJkg0eZ2', 'tbpmb5heLcuqOk0lp90vgdezPZDRUqhHO1X6Qd9p5GRNiYLp3AaU1yCTv7d1', '2021-02-11 03:55:09', '2021-02-11 03:55:09'),
-(5, 'Cilantro', 'Cilantro@yahoo.com', 'user', NULL, '$2y$10$/QVhMFRYvikvBC/BnS1Zl.EcLNzLjygPqd7Epx1Cfl8YJ/M.Lq4hu', '0veJ7rEeDtxqItCaP0tIEF4p58voYK6uuaVzKQFw9fGHBmW4xRifcFzv5CjT', '2021-02-12 02:48:06', '2021-02-12 02:48:06'),
+(3, 'Michael', 'mmohler1@my.gcu.edu', 'admin', NULL, '$2y$10$0X7Tu6WN9CANC0FcmPVHiO8b.bEBcaYtPeszqfqTGWdTbCJkg0eZ2', 'lEn1yFFxCNPM88tcKN8g2bjgElENKSsLLaG1c3mbmT451jBlJyS6aXkKcZE3', '2021-02-11 03:55:09', '2021-02-11 03:55:09'),
+(5, 'Cilantro', 'Cilantro@yahoo.com', 'user', NULL, '$2y$10$/QVhMFRYvikvBC/BnS1Zl.EcLNzLjygPqd7Epx1Cfl8YJ/M.Lq4hu', 'bI5nWx5HnWZk58p00M1KvzuCWEAPjM03XQ1nHwdjX9VrFHvS4LILcJJIPM8S', '2021-02-12 02:48:06', '2021-02-12 02:48:06'),
 (7, 'Administration', 'Root@gmail.com', 'admin', NULL, '$2y$10$gkgvE6XP3ts3jxyum/srY.LYzfS3K/Y1neQJSbIrpYZf/Ry0AYyI6', NULL, '2021-02-23 06:52:18', '2021-02-23 06:52:18');
 
 --
@@ -183,6 +199,7 @@ ALTER TABLE `groups`
 -- Indexes for table `job`
 --
 ALTER TABLE `job`
+  ADD PRIMARY KEY (`jobId`),
   ADD KEY `jconstraint` (`id`);
 
 --
@@ -207,6 +224,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `job`
+--
+ALTER TABLE `job`
+  MODIFY `jobId` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `migrations`
