@@ -51,6 +51,7 @@ class JobController extends Controller
         return view('posting/addJob');
     }
     
+    //Takes user to allJobs Page
     public function allJobs()
     {
         
@@ -75,12 +76,20 @@ class JobController extends Controller
     }
     
     
+    //Takes user to search page
+    public function searchJob()
+    {
+        
+        
+        return view('posting/searchJob');
+    }
+    
     //Takes user to update page with info
     public function updateJobRedirect(Request $request)
     {
         
         
-        return redirect('posting/updateJob')->with('oldName', request()->get('hiddenName'))
+        return redirect('updateJob')->with('oldName', request()->get('hiddenName'))
         ->with('oldRequirement', request()->get('hiddenRequirement'))
         ->with('oldSummary', request()->get('hiddenSummary'));
     }
@@ -100,7 +109,7 @@ class JobController extends Controller
     public function createJob(Request $request)
     {
         //Makes new Job using informaton from page
-        $jobData = new JobModel(Auth::user()->id, request()->get('name'), request()->get('requirement'), request()->get('summary'));
+        $jobData = new JobModel(Auth::user()->id, request()->get('name'), request()->get('requirement'), request()->get('summary'), 0);
         
         $jobServ = new JobService();
         
@@ -124,7 +133,7 @@ class JobController extends Controller
     public function changejob(Request $request)
     {
         //Makes new job using informaton from page
-        $jobData = new JobModel(Auth::user()->id, request()->get('name'), request()->get('requirement'), request()->get('summary'));
+        $jobData = new JobModel(Auth::user()->id, request()->get('name'), request()->get('requirement'), request()->get('summary'), 0);
         $compare = request()->get('hiddenName');
         
         //Calls update service
@@ -164,6 +173,54 @@ class JobController extends Controller
         return view('posting/job', ['jobs' => $job_array]);
    
         
+    }
+    
+    //Takes user to the search Job page, but with just the one's they searched for.
+    public function lookJob(Request $request)
+    {
+        
+        
+        //Validates that the search is not empty
+        $rules = [
+            'search' => 'Required | Between: 1, 255',
+        ];
+        $this->validate($request, $rules);
+        
+        
+        $searchTerm = $_GET["search"];
+        $page = $_GET["page"];
+        
+
+        // Only show a total of 3 jobs so use some math for Limit min , max
+        $max = 3;
+        $min = ($page-1) * $max;
+        
+        $jobServ  = new JobService();
+              
+        $totalFound = count($jobServ->findJobs($searchTerm, 0, 14)); // looks for, at the most, 15 jobs and puts them in an array
+        
+        $pageNumbers = ceil($totalFound / $max); //Divid by 3 and round up to decide how many pages are needed
+        
+        //returns list of jobs around keyword
+        $some_jobs = $jobServ->findJobs($searchTerm, $min, $max);
+        
+        
+               
+        return view('posting/searchedJobs', ['jobs' => $some_jobs, 'searchTerm' => $searchTerm, 'pageNumbers' =>  $pageNumbers, 'onPage' => $page] );
+            
+    }
+    
+    //Takes user unique job page based on GET paramters
+    public function specificJob(Request $request)
+    {
+        
+        $jobID = $_GET["jobid"];
+        
+        
+        $jobServ = new JobService;
+        $job_array = $jobServ->lookForJob($jobID);
+
+        return view('posting/uniqueJob', ['aJob' => $job_array]);
     }
     
 }

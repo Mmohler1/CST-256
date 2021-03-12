@@ -64,7 +64,7 @@ class PortfolioController extends Controller
     {
 
         
-        return redirect('eportfolio/updatePortfolio')->with('oldHistory', request()->get('hiddenHistory')) 
+        return redirect('updatePortfolio')->with('oldHistory', request()->get('hiddenHistory')) 
                                             ->with('oldSkills', request()->get('hiddenSkills'))
                                             ->with('oldEducation', request()->get('hiddenEducation'));
     }

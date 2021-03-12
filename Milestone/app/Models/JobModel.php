@@ -8,19 +8,19 @@ class JobModel
     private $name;
     private $requirement;
     private $summary;
+    private $jobid;
     
     
     
     //Constructor
-    public function __construct($id, $name, $requirement, $summary)
+    public function __construct($id, $name, $requirement, $summary, $jobid)
     {
         $this->id = $id;
         $this->name = $name;
         $this->requirement = $requirement;
         $this->summary = $summary;
-        
+        $this->jobid = $jobid;
     }
-    
     
     /**
      * @return mixed
@@ -30,6 +30,14 @@ class JobModel
         return $this->id;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getJobId()
+    {
+        return $this->jobid;
+    }
+    
     /**
      * @return mixed
      */
@@ -60,6 +68,14 @@ class JobModel
     public function setId($id)
     {
         $this->id = $id;
+    }
+    
+    /**
+     * @param mixed $id
+     */
+    public function setJobId($jobid)
+    {
+        $this->jobid = $jobid;
     }
 
     /**

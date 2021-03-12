@@ -54,6 +54,30 @@ class JobService
         
     }
     
+    //Returns array of job list matching userID
+    public function findJobs(string $searchTerm, int $min, int $max)
+    {
+        
+
+        
+        $jobDAO  = new JobDAO();
+        
+
+        return $jobDAO->searchJobs($searchTerm, $min, $max);
+        
+        
+    }
+    
+    //Returns array of a job. Used for unique page
+    public function lookForJob(int $jobID)
+    {
+        $jobDAO  = new JobDAO();
+        
+        return $jobDAO->findAJob($jobID);
+        
+        
+    }
+    
     //Validation Rules to be returned
     public function validateJob(Request $request)
     {

@@ -124,7 +124,7 @@ class JobDAO
     }
     
     
-    //Sends portfolia data from the database based on the users ID
+    //Sends job data from the database based on the users ID
     public function viewJob(int $userID)
     {
         
@@ -156,7 +156,7 @@ class JobDAO
                     {
                         //Save array as the model
                         $job_array[$x] = new JobModel($row["id"],
-                            $row["jname"], $row["requirement"], $row["summary"]);
+                            $row["jname"], $row["requirement"], $row["summary"], $row["jobId"]);
                         
                         //increment ammount
                         $x = $x + 1;
@@ -185,7 +185,7 @@ class JobDAO
     }
     
     
-    //Sends portfolia data from the database based on the users ID
+    //Sends job data from the database based on the users ID
     public function allJobs()
     {
         
@@ -217,7 +217,145 @@ class JobDAO
                     {
                         //Save array as the model
                         $job_array[$x] = new JobModel($row["id"],
-                            $row["jname"], $row["requirement"], $row["summary"]);
+                            $row["jname"], $row["requirement"], $row["summary"], $row["jobId"]);
+                        
+                        //increment ammount
+                        $x = $x + 1;
+                    }
+                    
+                    $this->conn->closeDbConnect();
+                    return $job_array;
+                }
+                else
+                {
+                    $this->conn->closeDbConnect();
+                    return $job_array;
+                }
+            }
+            else
+            {
+                $this->conn->closeDbConnect();
+                return $job_array;
+            }
+            
+        }
+        catch(Exception $e)
+        {
+            echo $e->getMessage();
+        }
+    }
+    
+    //Searches for jobs based on a key word.
+    public function searchJobs(string $searchTerm, int $min, int $max)
+    {
+        
+        try
+        {
+            
+            //New list of 
+            $this->dbQuery =             
+                "SET @row_number=0;";
+            
+            //runs first Query to help make the paging system allowing each new search table to have it's own id.
+            $result = $this->connection->query($this->dbQuery);
+            
+            
+            //Nested SELECT statment that makes a new searched term table with it's own id. Then uses that as the basis for the between statement.
+            $this->dbQuery = "SELECT * FROM
+                        (select (@row_number:=@row_number + 1) AS number,
+                        jobId, id, jname, requirement, summary FROM job
+                        WHERE jname LIKE '%$searchTerm%' OR requirement LIKE '%$searchTerm%' OR summary LIKE '%$searchTerm%'
+                        )AS search LIMIT $min , $max";
+            
+                        
+            
+          
+            
+            
+            //Setup the array
+            $job_array = [];
+            
+            if (mysqli_query($this->connection, $this->dbQuery))
+            {
+                
+                //Saves information in this variable
+                $result = $this->connection->query($this->dbQuery);
+                
+                
+                
+                //If someone is in the database insert them into table
+                if($result->num_rows > 0)
+                {
+                    
+                    
+                    //for loop
+                    $x = 0;
+                    //loop for all results
+                    while($row = $result->fetch_assoc())
+                    {
+                        //Save array as the model
+                        $job_array[$x] = new JobModel($row["id"],
+                            $row["jname"], $row["requirement"], $row["summary"], $row["jobId"]);
+                        
+                        //increment ammount
+                        $x = $x + 1;
+                    }
+                    
+                    $this->conn->closeDbConnect();
+                    return $job_array;
+                }
+                else
+                {
+                    $this->conn->closeDbConnect();
+                    return $job_array;
+                }
+            }
+            else
+            {
+                $this->conn->closeDbConnect();
+                return $job_array;
+            }
+            
+        }
+        catch(Exception $e)
+        {
+            echo $e->getMessage();
+        }
+    }
+    
+    //Sends job data from the database based on the users ID
+    public function findAJob(int $jobID)
+    {
+        
+        try
+        {
+            
+            $this->dbQuery = ("Select * FROM job WHERE jobId = '$jobID';");
+            
+            //Setup the array
+            $job_array = [];
+            
+            if (mysqli_query($this->connection, $this->dbQuery))
+            {
+                
+                //Saves information in this variable
+                $result = $this->connection->query($this->dbQuery);
+                
+                
+                
+                //If someone is in the database insert them into table
+                if($result->num_rows > 0)
+                {
+                    
+                    
+                    //for loop
+                    $x = 0;
+                    //loop for all results
+                    while($row = $result->fetch_assoc())
+                    {
+                        //Save array as the model
+                        $job_array[$x] = new JobModel($row["id"],
+                            $row["jname"], $row["requirement"], $row["summary"], $row["jobId"]);
                         
                         //increment ammount
                         $x = $x + 1;
