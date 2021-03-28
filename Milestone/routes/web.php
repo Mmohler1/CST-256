@@ -53,6 +53,8 @@ Route::post('doUpdate','PortfolioController@changePortfolio');
 
 Route::post('doDelete','PortfolioController@deletePortfolio');
 
+Route::get('/uniquePortfolio', 'PortfolioController@specificPortfolio'); 
+
 
 //Routes for job 
 Route::get('job', 'JobController@index');
@@ -109,3 +111,8 @@ Route::post('/doDeleteGroup','GroupController@deleteGroup');
 Route::post('/updateAGroup','GroupController@changeGroupRedirect'); //for getting to update page
 
 Route::post('/doUpdateGroup','GroupController@updateGroup');
+
+//Web API urls!
+Route::resource('/jobsrest', 'REST\JobsRestController');
+Route::resource('/efoliorest', 'REST\EfolioRestController');
+Route::resource('/userrest', 'REST\UserRestController');
