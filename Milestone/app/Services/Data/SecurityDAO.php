@@ -302,5 +302,47 @@ class SecurityDAO
         return $users_array;
         
     }
+    
+    //Date 3-24
+    //returns users name and email based on ID.
+    public function getUserDetails(int $userID)
+    {
+        //Setup the array
+        $users_array = [];
+        
+        //Connects to Database
+        $dbConn = $this->dbConnection();
+        
+        
+        //First Query checks to see if anyone is in the table with that id
+        $sql = ("SELECT id, name, email, roles FROM users WHERE id = '$userID';");
+        
+        
+        $result = $dbConn->query($sql);
+        
+        //If someone is in the database insert them into table
+        if($result->num_rows > 0)
+        {
+            //for loop
+            $x = 0;
+            //loop for all results
+            while($row = $result->fetch_assoc())
+            {
+                //Save array as the model
+                $users_array[$x] = new UserModel($row["id"],
+                    $row["name"], $row["roles"], $row["email"]);
+                
+                //increment ammount
+                $x = $x + 1;
+            }
+            
+        }
+        
+        
+        //Closses Connection
+        $dbConn->close();
+        return $users_array;
+        
+    }
 }
 

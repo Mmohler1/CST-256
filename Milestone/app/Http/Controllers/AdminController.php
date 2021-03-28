@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\Business\SecurityService;
-use App\User;
+
 
 class AdminController extends Controller
 {

@@ -42,6 +42,7 @@ class PortfolioService
         return $portDAO->viewPortfolio($userID);         
     }
     
+
     
     //Validation Rules to be returned to the
     public function validatePortfolio(Request $request)

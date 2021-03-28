@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
-class PortfolioModel
+use JsonSerializable;
+
+class PortfolioModel implements \JsonSerializable
 {
     private $id;
     private $history;
@@ -19,6 +21,17 @@ class PortfolioModel
         $this->education = $education;
         
     }
+    
+    /**
+     * {@inheritDoc}
+     * @see JsonSerializable::jsonSerialize()
+     */
+    public function jsonSerialize()
+    {
+        // TODO Auto-generated method stub
+        return get_object_vars($this);
+    }
+    
     
     /**
      * @return mixed

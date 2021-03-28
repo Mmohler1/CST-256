@@ -65,6 +65,15 @@ class SecurityService
         
     }
     
+    public function findUserDetails(int $userID)
+    {
+        //Created to use DAO, then run function.
+        $secDao = new SecurityDAO;
+        
+        
+        return $secDao->getUserDetails($userID);
+    }
+    
     
 }
 

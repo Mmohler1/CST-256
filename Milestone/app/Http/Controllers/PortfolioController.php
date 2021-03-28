@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\Business\PortfolioService;
 use App\Models\PortfolioModel;
+use App\Services\Business\SecurityService;
 
 class PortfolioController extends Controller
 {
@@ -149,6 +150,23 @@ class PortfolioController extends Controller
         return view('eportfolio/portfolio', ['portfolios' => $portfolio_array]);
         
         
+    }
+    
+    //Added 3-24
+    //Takes user unique group page based on GET paramters
+    public function specificPortfolio(Request $request)
+    {
+        
+        $portfolio = $_GET["port"];
+        
+        $portServ = new PortfolioService();
+        $secServ = new SecurityService();
+        
+        $port_array = $portServ->viewAPortfolio($portfolio);
+        $user_array = $secServ->findUserDetails($portfolio);
+        
+        
+        return view('eportfolio/uniquePortfolio', ['ports' => $port_array, 'info' => $user_array]);
     }
 
 }

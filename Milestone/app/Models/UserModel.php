@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
-class UserModel
+use JsonSerializable;
+
+class UserModel implements \JsonSerializable
 {
     private $id;
     private $username;
@@ -18,6 +20,16 @@ class UserModel
         $this->roles = $roles;
         $this->email = $email;
         
+    }
+    
+    /**
+     * {@inheritDoc}
+     * @see JsonSerializable::jsonSerialize()
+     */
+    public function jsonSerialize()
+    {
+        // TODO Auto-generated method stub
+        return get_object_vars($this);
     }
     
     /**

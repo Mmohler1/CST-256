@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
-class JobModel
+use JsonSerializable;
+
+class JobModel implements \JsonSerializable
 {
     private $id;
     private $name;
@@ -20,6 +22,17 @@ class JobModel
         $this->requirement = $requirement;
         $this->summary = $summary;
         $this->jobid = $jobid;
+    }
+    
+    
+    /**
+     * {@inheritDoc}
+     * @see JsonSerializable::jsonSerialize()
+     */
+    public function jsonSerialize()
+    {
+        // TODO Auto-generated method stub
+        return get_object_vars($this);
     }
     
     /**
