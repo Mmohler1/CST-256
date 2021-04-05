@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 12, 2021 at 08:41 AM
+-- Generation Time: Apr 03, 2021 at 08:06 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.4.1
 
@@ -23,6 +23,21 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `dbsecu` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `dbsecu`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `apply`
+--
+
+DROP TABLE IF EXISTS `apply`;
+CREATE TABLE `apply` (
+  `applyId` int(11) NOT NULL,
+  `jobId` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -77,7 +92,9 @@ INSERT INTO `groups` (`groupName`, `id`, `userName`, `summary`, `creatorId`) VAL
 ('Programming Stuff', 5, 'Cilantro', 'Anything but php.', 3),
 ('stuff', 3, 'Michael', NULL, 7),
 ('Education', 3, 'Michael', NULL, 7),
-('TV Director', 3, 'Michael', 'Director for an action TV Show. Requires dynamic shots, knowledge on martial arts, and at least 5 years experience.', 3);
+('TV Director', 3, 'Michael', 'Director for an action TV Show. Requires dynamic shots, knowledge on martial arts, and at least 5 years experience.', 3),
+('Education', 8, 'Me', NULL, 7),
+('Testing', 3, 'Michael', 'Testing this add group out.', 3);
 
 -- --------------------------------------------------------
 
@@ -175,13 +192,20 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `roles`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(3, 'Michael', 'mmohler1@my.gcu.edu', 'admin', NULL, '$2y$10$0X7Tu6WN9CANC0FcmPVHiO8b.bEBcaYtPeszqfqTGWdTbCJkg0eZ2', 'lEn1yFFxCNPM88tcKN8g2bjgElENKSsLLaG1c3mbmT451jBlJyS6aXkKcZE3', '2021-02-11 03:55:09', '2021-02-11 03:55:09'),
-(5, 'Cilantro', 'Cilantro@yahoo.com', 'user', NULL, '$2y$10$/QVhMFRYvikvBC/BnS1Zl.EcLNzLjygPqd7Epx1Cfl8YJ/M.Lq4hu', 'bI5nWx5HnWZk58p00M1KvzuCWEAPjM03XQ1nHwdjX9VrFHvS4LILcJJIPM8S', '2021-02-12 02:48:06', '2021-02-12 02:48:06'),
-(7, 'Administration', 'Root@gmail.com', 'admin', NULL, '$2y$10$gkgvE6XP3ts3jxyum/srY.LYzfS3K/Y1neQJSbIrpYZf/Ry0AYyI6', NULL, '2021-02-23 06:52:18', '2021-02-23 06:52:18');
+(3, 'Michael', 'mmohler1@my.gcu.edu', 'admin', NULL, '$2y$10$0X7Tu6WN9CANC0FcmPVHiO8b.bEBcaYtPeszqfqTGWdTbCJkg0eZ2', 'XZCf40YGhqpvs2PtHMZMYuj8eNv4di5Tk5eW2eCO1pmGeoj34JeTVEiBVDbP', '2021-02-11 03:55:09', '2021-02-11 03:55:09'),
+(5, 'Cilantro', 'Cilantro@yahoo.com', 'user', NULL, '$2y$10$/QVhMFRYvikvBC/BnS1Zl.EcLNzLjygPqd7Epx1Cfl8YJ/M.Lq4hu', 'QvZHYlGua6mjawHM1R2ySxaG9tIJZSBGOo174DMyhZZaHeCDRec4sPWxtoHD', '2021-02-12 02:48:06', '2021-02-12 02:48:06'),
+(7, 'Administration', 'Root@gmail.com', 'admin', NULL, '$2y$10$gkgvE6XP3ts3jxyum/srY.LYzfS3K/Y1neQJSbIrpYZf/Ry0AYyI6', NULL, '2021-02-23 06:52:18', '2021-02-23 06:52:18'),
+(8, 'Me', 'Stuff@gmail.com', 'user', NULL, '$2y$10$E4UZiOutan2ydrx9JM6lnOhWNVIiCGnk1A8EYYYhu51T2uuWl1yk6', NULL, '2021-03-27 04:14:21', '2021-03-27 04:14:21');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `apply`
+--
+ALTER TABLE `apply`
+  ADD PRIMARY KEY (`applyId`);
 
 --
 -- Indexes for table `efolio`
@@ -226,6 +250,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `apply`
+--
+ALTER TABLE `apply`
+  MODIFY `applyId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `job`
 --
 ALTER TABLE `job`
@@ -241,7 +271,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
