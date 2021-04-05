@@ -14,18 +14,20 @@ use Illuminate\Support\Facades\Auth;
 use App\Services\Business\PortfolioService;
 use App\Models\PortfolioModel;
 use App\Services\Business\SecurityService;
+use App\Services\Data\Utility\ILoggerService;
 
 class PortfolioController extends Controller
 {
     
-    
+    protected $logger;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(ILoggerService $logger)
     {
+        $this->logger = $logger;
         $this->middleware('auth');
     }
     
@@ -36,6 +38,8 @@ class PortfolioController extends Controller
      */
     public function index()
     {
+        $this->logger->info("Entering Portfolio Controller");
+        
         //Change to specific users id so someone can view others page
         $portfolio_array = $this->showPortfolios(Auth::user()->id);
         
@@ -76,6 +80,7 @@ class PortfolioController extends Controller
     {
         $portServ  = new PortfolioService();
         
+        $this->logger->info("View Portfolio of User " .$userID);
         $portfolio_array = $portServ->viewAPortfolio($userID);
         
         return $portfolio_array;
@@ -86,7 +91,7 @@ class PortfolioController extends Controller
     {
         //Makes new portfolio using informaton from page
         $portfolioData = new PortfolioModel(Auth::user()->id, request()->get('history'), request()->get('skills'), request()->get('education'));
-        
+        $this->logger->info("Creating Portfolio with History: " .$portfolioData->getHistory());
         $portServ = new PortfolioService();
         
         //Validates the portfolio by calling it from the Bussiness Layer.
@@ -115,6 +120,7 @@ class PortfolioController extends Controller
         $portfolioData = new PortfolioModel(Auth::user()->id, request()->get('history'), request()->get('skills'), request()->get('education'));
         $compare = request()->get('hiddenHistory');
         
+        $this->logger->info("Updating Portfolio with History: " .$compare ."with " .$portfolioData->getHistory());
         //Calls update service
         $portServ = new PortfolioService();
         
@@ -138,7 +144,7 @@ class PortfolioController extends Controller
         $portServ  = new PortfolioService();
         
         $portServ->deleteAPortfolio(request()->get('hiddenId') , request()->get('hiddenHistory'), );
-        
+        $this->logger->info("Deleting Portfolio with Id: " .request()->get('hiddenId'));
         
         //Reload the page, but with the new array. 
         
@@ -158,6 +164,7 @@ class PortfolioController extends Controller
     {
         
         $portfolio = $_GET["port"];
+        $this->logger->info("Unique Portfolio Page with User Id " .$portfolio);
         
         $portServ = new PortfolioService();
         $secServ = new SecurityService();

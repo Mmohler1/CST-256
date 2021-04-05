@@ -2,6 +2,7 @@
 namespace App\Services\Data;
 
 use Carbon\Exceptions\Exception;
+use Illuminate\Support\Facades\Log;
 use App\Models\JobModel;
 use App\Services\Data\Utility\DBConnect;
 
@@ -33,7 +34,7 @@ class JobDAO
     //Add Job to Database
     public function addJob(JobModel $jobData)
     {
-        
+        Log::info("Add Job with Name: " .$jobData->getName());
         try
         {
             
@@ -57,6 +58,7 @@ class JobDAO
         }
         catch(Exception $e)
         {
+            Log::error("Add Job Error Message: " .$e->getMessage());
             echo $e->getMessage();
         }
     }
@@ -64,7 +66,7 @@ class JobDAO
     //Update Job to Database
     public function updateJob(JobModel $jobData, string $compare)
     {
-        
+        Log::info("Update Job with Name: " .$compare);
         try
         {
             
@@ -89,6 +91,7 @@ class JobDAO
         }
         catch(Exception $e)
         {
+            Log::error("Update Job Error Message: " .$e->getMessage());
             echo $e->getMessage();
         }
     }
@@ -96,7 +99,7 @@ class JobDAO
     //Delete Job to Database
     public function deleteJob(int $userID, string $userjname)
     {
-        
+        Log::info("Delete Job with Name: " .$userjname);
         try
         {
             
@@ -119,6 +122,38 @@ class JobDAO
         }
         catch(Exception $e)
         {
+            Log::error("Delete Job Error Message: " .$e->getMessage());
+            echo $e->getMessage();
+        }
+    }
+    
+    //Delete all jobs from user in Database
+    public function deleteAllJobs(int $userID)
+    {
+        Log::info("Delete All Job from User: " .$userID);
+        try
+        {
+            
+            
+            $this->dbQuery = "DELETE FROM job WHERE id = '$userID'";
+            
+            
+            if (mysqli_query($this->connection, $this->dbQuery))
+            {
+                $this->conn->closeDbConnect();
+                return true;
+                
+            }
+            else
+            {
+                $this->conn->closeDbConnect();
+                return false;
+            }
+            
+        }
+        catch(Exception $e)
+        {
+            Log::error("Delete All Jobs Error Message: " .$e->getMessage());
             echo $e->getMessage();
         }
     }
@@ -127,7 +162,7 @@ class JobDAO
     //Sends job data from the database based on the users ID
     public function viewJob(int $userID)
     {
-        
+        Log::info("View Jobs with the user id : " .$userID);
         try
         {
             
@@ -180,6 +215,7 @@ class JobDAO
         }
         catch(Exception $e)
         {
+            Log::error("View Job Error Message: " .$e->getMessage());
             echo $e->getMessage();
         }
     }
@@ -188,7 +224,8 @@ class JobDAO
     //Sends job data from the database based on the users ID
     public function allJobs()
     {
-        
+        Log::info("Show all Jobs");
+        Log::warning("Show all Jobs has not been implemented yet.");
         try
         {
             
@@ -241,6 +278,7 @@ class JobDAO
         }
         catch(Exception $e)
         {
+            Log::error("All Jobs Error Message: " .$e->getMessage());
             echo $e->getMessage();
         }
     }
@@ -248,7 +286,7 @@ class JobDAO
     //Searches for jobs based on a key word.
     public function searchJobs(string $searchTerm, int $min, int $max)
     {
-        
+        Log::info("Search Jobs with the word " .$searchTerm);
         try
         {
             
@@ -319,6 +357,7 @@ class JobDAO
         }
         catch(Exception $e)
         {
+            Log::info("Job Search Error Message: " .$e->getMessage());
             echo $e->getMessage();
         }
     }
@@ -326,7 +365,7 @@ class JobDAO
     //Sends job data from the database based on the users ID
     public function findAJob(int $jobID)
     {
-        
+        Log::info("Get Job Data from JobID: " .$jobID);
         try
         {
             
@@ -379,6 +418,7 @@ class JobDAO
         }
         catch(Exception $e)
         {
+            Log::info("Find Job Error Message: " .$e->getMessage());
             echo $e->getMessage();
         }
     }

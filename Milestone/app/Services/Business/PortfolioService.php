@@ -34,6 +34,14 @@ class PortfolioService
         
     }
     
+    public function deleteAllPortfolio(int $userID)
+    {
+        $portDAO  = new PortfolioDAO();
+        
+        return $portDAO->deleteAllPortfolio($userID);
+        
+    }
+    
     //Returns array of portfolio list matching userID
     public function viewAPortfolio(int $userID)
     {

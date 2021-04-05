@@ -34,6 +34,14 @@ class JobService
         
     }
     
+    public function deleteAllJob(int $userID)
+    {
+        $jobDAO  = new JobDAO();
+        
+        return $jobDAO->deleteAllJobs($userID);
+        
+    }
+    
     //Returns array of job list matching userID
     public function viewAJob(int $userID)
     {

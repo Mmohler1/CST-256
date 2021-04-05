@@ -12,17 +12,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\Business\GroupService;
+use App\Services\Data\Utility\ILoggerService;
 use App\Models\GroupModel;
 
 class GroupController extends Controller
 {
+    
+    protected $logger;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(ILoggerService $logger)
     {
+        $this->logger = $logger;
         $this->middleware('auth');
     }
     
@@ -36,7 +40,10 @@ class GroupController extends Controller
      */
     public function index()
     {
+        $this->logger->info("Entering Group Controller");
+        
         //Calls array of groups
+        $this->logger->info("Show group of array.");
         $group_array = $this->showGroups();
         
         
@@ -78,13 +85,17 @@ class GroupController extends Controller
     public function specificGroup(Request $request)
     {
         
+        $this->logger->info("Get Request");
         $group = $_GET["group"];
         
+        $this->logger->info("Make Array of users");
         $user_array = $this->showGroupes($group);
         
         $groServ = new GroupService;
         
+        
         $inGroup = $groServ->checkGroupe($group, Auth::user()->getAuthIdentifier());
+        $this->logger->info("CheckUser is " .$inGroup);
         
         return view('uniqueGroup', ['groupes' => $user_array, 'checkUser' => $inGroup]);
     }
@@ -99,6 +110,7 @@ class GroupController extends Controller
         //Initalize Business Class
         $groServ = new GroupService;
         
+        $this->logger->info("Get Request");
         $group = $_GET["group"];
         $creatorId = $_GET["creatorId"];
         
@@ -107,10 +119,12 @@ class GroupController extends Controller
         
         if($groServ->joinAGroup($groupData))
         {
+            $this->logger->info("Make Array of users");
             $user_array = $this->showGroupes($groupData->getGroupName());
             
             
             $inGroup = $groServ->checkGroupe($group, Auth::user()->getAuthIdentifier());
+            $this->logger->info("CheckUser is " .$inGroup);
             
             return view('uniqueGroup', ['groupes' => $user_array, 'checkUser' => $inGroup]);
         }
@@ -124,9 +138,11 @@ class GroupController extends Controller
         //Initalize Business Class
         $groServ = new GroupService;
         
+        $this->logger->info("Get Request");
         $group = $_GET["group"];
         $creatorId = $_GET["creatorId"];
         
+        $this->logger->info("Make Array of users");
         //Make GroupData
         $groupData = new GroupModel($group, Auth::user()->getAuthIdentifier(), Auth::user()->getAuthIdentifierName(), "", $creatorId);
         
@@ -136,6 +152,7 @@ class GroupController extends Controller
             
             
             $inGroup = $groServ->checkGroupe($group, Auth::user()->getAuthIdentifier());
+            $this->logger->info("CheckUser is " .$inGroup);
             
             return view('uniqueGroup', ['groupes' => $user_array, 'checkUser' => $inGroup]);
         }
@@ -166,6 +183,7 @@ class GroupController extends Controller
         
         $groServ = new GroupService;
         
+        $this->logger->info("Post Request");
         $groupData = new GroupModel(request()->get('groupName') , request()->get('hiddenId'), request()->get('hiddenUserName'), request()->get('summary'), request()->get('hiddenId'));
         
         //using old name to help find which table to update
@@ -191,6 +209,7 @@ class GroupController extends Controller
         
         $groServ = new GroupService;
         
+        $this->logger->info("Post Request");
         //named parted doesn't need to be relevent, but I want to keep it here in case I change the SQL
         $groupData = new GroupModel(request()->get('groupName') , Auth::user()->getAuthIdentifier(), Auth::user()->getAuthIdentifierName(), request()->get('summary'), Auth::user()->getAuthIdentifier());
         

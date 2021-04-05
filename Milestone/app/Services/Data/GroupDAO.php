@@ -2,6 +2,7 @@
 namespace App\Services\Data;
 
 use Carbon\Exceptions\Exception;
+use Illuminate\Support\Facades\Log;
 use App\Models\GroupModel;
 use App\Services\Data\Utility\DBConnect;
 
@@ -33,7 +34,7 @@ class GroupDAO
     //Add user to Group
     public function joinGroup(GroupModel $groupData)
     {
-        
+        Log::info("Join Group named: " .$groupData->getGroupName());
         try
         {
             
@@ -59,6 +60,7 @@ class GroupDAO
         }
         catch(Exception $e)
         {
+            Log::error("Join Group Error Message: " .$e->getMessage());
             echo $e->getMessage();
         }
     }
@@ -67,7 +69,7 @@ class GroupDAO
     //user leaves group by deleting them from the database
     public function leaveGroup(GroupModel $groupData)
     {
-        
+        Log::info("Leave Group named: " .$groupData->getGroupName());
         try
         {
             
@@ -90,16 +92,46 @@ class GroupDAO
         }
         catch(Exception $e)
         {
+            Log::error("Leave Group Error Message: " .$e->getMessage());
             echo $e->getMessage();
         }
     }
     
-    
+    //deletes group users and creators with this id.
+    public function DeleteAllGroups(int $id)
+    {
+        Log::info("Delete All Groups and Members With Id: " .$id);
+        try
+        {
+            
+            
+            $this->dbQuery = "DELETE FROM groups WHERE id = $id OR creatorId = $id";
+            
+            
+            if (mysqli_query($this->connection, $this->dbQuery))
+            {
+                $this->conn->closeDbConnect();
+                return true;
+                
+            }
+            else
+            {
+                $this->conn->closeDbConnect();
+                return false;
+            }
+            
+        }
+        catch(Exception $e)
+        {
+            Log::error("Delete All Groups Error Message: " .$e->getMessage());
+            echo $e->getMessage();
+        }
+    }
     
     //Delete Group from database
     public function deleteGroup(string $groupName, int $groupId)
     {
-        
+        Log::info("Delete Group named: " .$groupName);
         try
         {
             
@@ -122,6 +154,7 @@ class GroupDAO
         }
         catch(Exception $e)
         {
+            Log::error("Delete Group Error Message: " .$e->getMessage());
             echo $e->getMessage();
         }
     }
@@ -189,6 +222,7 @@ class GroupDAO
         }
         catch(Exception $e)
         {
+            Log::error("Show users Group Error Message: " .$e->getMessage());
             echo $e->getMessage();
         }
     }
@@ -251,6 +285,7 @@ class GroupDAO
         }
         catch(Exception $e)
         {
+            Log::error("Show All Groups Error Message: " .$e->getMessage());
             echo $e->getMessage();
         }
     }
@@ -282,6 +317,7 @@ class GroupDAO
         }
         catch(Exception $e)
         {
+            Log::error("Add Group Error Message: " .$e->getMessage());
             echo $e->getMessage();
         }
     }
@@ -315,6 +351,7 @@ class GroupDAO
         }
         catch(Exception $e)
         {
+            Log::error("Update Group Error Message: " .$e->getMessage());
             echo $e->getMessage();
         }
     }

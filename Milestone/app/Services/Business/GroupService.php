@@ -26,6 +26,14 @@ class GroupService
         return $groServ->leaveGroup($groupData);
     }
     
+    //Deletes users and group makers
+    public function deleteAllGroup(int $id)
+    {
+        $groServ = new GroupDAO;
+        
+        return $groServ->DeleteAllGroups($id);
+    }
+    
     //Admin Deletes a group
     public function deleteAGroup(string $groupName, int $groupId)
     {

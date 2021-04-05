@@ -2,6 +2,7 @@
 namespace App\Services\Data;
 
 use Carbon\Exceptions\Exception;
+use Illuminate\Support\Facades\Log;
 use App\Models\PortfolioModel;
 use App\Services\Data\Utility\DBConnect;
 
@@ -34,7 +35,7 @@ class PortfolioDAO
     //Add Portfolio to Database
     public function addPortfolio(PortfolioModel $portfolioData)
     {
-
+        Log::info("Add Portfolio for user: " .$portfolioData->getId());
         try
         { 
             
@@ -58,6 +59,7 @@ class PortfolioDAO
         }
         catch(Exception $e)
         {
+            Log::error("Add Portfolio Error Message: " .$e->getMessage());
             echo $e->getMessage();
         }
     }
@@ -65,7 +67,7 @@ class PortfolioDAO
     //Update Portfolio to Database
     public function updatePortfolio(PortfolioModel $portfolioData, string $compare)
     {
-        
+        Log::info("Update Portfolio for user: " .$portfolioData->getId());
         try
         {
               
@@ -90,6 +92,7 @@ class PortfolioDAO
         }
         catch(Exception $e)
         {
+            Log::error("Update Portfolio Error Message: " .$e->getMessage());
             echo $e->getMessage();
         }
     }
@@ -97,7 +100,7 @@ class PortfolioDAO
     //Delete Portfolio to Database
     public function deletePortfolio(int $userID, string $userHistory)
     {
-        
+        Log::info("Delete Portfolio for user: " .$userID);
         try
         {
             
@@ -120,15 +123,46 @@ class PortfolioDAO
         }
         catch(Exception $e)
         {
+            Log::error("Delete Portfolio Error Message: " .$e->getMessage());
             echo $e->getMessage();
         }
     }
     
+    //Delete Portfolio to Database
+    public function deleteAllPortfolio(int $userID)
+    {
+        Log::info("Delete Portfolio for user: " .$userID);
+        try
+        {
+            
+            
+            $this->dbQuery = "DELETE FROM efolio WHERE id = '$userID'";
+            
+            
+            if (mysqli_query($this->connection, $this->dbQuery))
+            {
+                $this->conn->closeDbConnect();
+                return true;
+                
+            }
+            else
+            {
+                $this->conn->closeDbConnect();
+                return false;
+            }
+            
+        }
+        catch(Exception $e)
+        {
+            Log::error("Delete All Portfolio Error Message: " .$e->getMessage());
+            echo $e->getMessage();
+        }
+    }
     
     //Sends portfolia data from the database based on the users ID
     public function viewPortfolio(int $userID)
     {
-        
+        Log::info("Show Portfolio for user: " .$userID);
         try
         {
               
@@ -181,6 +215,7 @@ class PortfolioDAO
         }
         catch(Exception $e)
         {
+            Log::error("Show Portfolios Error Message: " .$e->getMessage());
             echo $e->getMessage();
         }
     }
