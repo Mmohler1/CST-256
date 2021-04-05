@@ -53,10 +53,16 @@
                                	{{csrf_field()}}
                                		<input type=hidden name="hiddenId" value="{{ $details->getId() }}">
                                		<input type=hidden name="hiddenName" value="{{ $details->getName() }}">
+                               		<input type=hidden name="hiddenJobInfo" value="{{ $details->getJobId() }}">
                                		<input type = "submit" value = "Delete" />
                                </form>
                           	</div>
                       	</div>
+                      	<form action = "uniqueJob" method = "GET">
+                      		<input type="hidden" name="jobid" value="{{ $details->getJobId() }}">
+                      		<br/>
+                       		<input type = "submit" value = "Go To Page!" />
+                      	</form>  
                        @endif
                        
                        </div>

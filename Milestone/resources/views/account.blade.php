@@ -15,7 +15,7 @@
                     @endif
                  
                  	<div class="center">
-                       <table>  <!-- Details of a users account. -->
+                       <table id="theUsers">  <!-- Details of a users account. -->
                            	<tr>
                            		<td><b>User ID:</b></td>
                            		<td>{{Auth::user()->id}}</td>

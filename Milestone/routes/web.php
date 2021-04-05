@@ -116,3 +116,8 @@ Route::post('/doUpdateGroup','GroupController@updateGroup');
 Route::resource('/jobsrest', 'REST\JobsRestController');
 Route::resource('/efoliorest', 'REST\EfolioRestController');
 Route::resource('/userrest', 'REST\UserRestController');
+
+//Apply
+Route::get('applied', 'JobController@jobApplied');
+Route::post('/doApply','JobController@ApplyJob');
+Route::get('doDeleteApply','JobController@deleteApply');
